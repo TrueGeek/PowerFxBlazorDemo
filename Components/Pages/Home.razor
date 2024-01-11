@@ -1,0 +1,121 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+@namespace PowerFxBlazorDemo.Components.Pages
+
+<PageTitle>Power Fx Blazor Sample</PageTitle>
+
+<!-- Context -->
+<div style="display: flex; justify-content: space-between;">
+
+    <h1>Context</h1>
+
+</div>
+
+<div style="margin-top: auto;">This is a JSON object whose properties become 'globals' in the Power Fx expression below.</div>
+
+<textarea @bind="contextObject" rows="5" style="width: 100%;" />
+
+<!-- Formula -->
+<div style="display: flex; justify-content: space-between;">
+
+    <h1>Formula</h1>
+
+    <div style="width: 100%; display: flex; justify-content: space-between; margin-left: 25px; margin-bottom: 5px;">
+
+        <div style="margin-top: auto; margin-left: auto;">
+            <a href="https://learn.microsoft.com/en-us/power-platform/power-fx/formula-reference" target="_blank">
+                [ Power Fx Forumla Reference ]
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<div style="margin-top: auto;">
+    This is a Power Fx expression. Refresh for a different example, or try your own.
+</div>
+
+<div id="formula" style="height: 76px;"></div>
+
+<div style="display: flex; padding-top: 15px; padding-bottom: 5px;">
+
+    <div class=@(selectedTab == 0 ? "tabButton tabButtonSelected" : "tabButton") @onclick="() => selectedTab = 0">EVALUATION</div>
+
+    <div class=@(selectedTab == 1 ? "tabButton tabButtonSelected" : "tabButton") @onclick="() => selectedTab = 1">TOKENS</div>
+
+    <div class=@(selectedTab == 2 ? "tabButton tabButtonSelected" : "tabButton") @onclick="() => selectedTab = 2">PARSE</div>
+
+    <div class=@(selectedTab == 3 ? "tabButton tabButtonSelected" : "tabButton") @onclick="() => selectedTab = 3">VERSIONS</div>
+
+</div>
+
+<!-- Evaluation -->
+@if (selectedTab == 0)
+{
+    <h1>Evaluation</h1>
+    <pre>@evaluation.Result</pre>
+}
+
+<!-- Tokens -->
+@if (selectedTab == 1)
+{
+    <h1>Tokens</h1>
+    <table>
+
+        <thead>
+            <tr>
+                <th>Token Kind</th>
+                <th>Token Span</th>
+                <th>Token Value</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var token in evaluation.Tokens)
+            {
+
+                <tr>
+                    <td>@token.Kind</td>
+                    <td>@token.Span</td>
+                    <td>@token.ToString()</td>
+                </tr>
+
+            }
+
+        </tbody>
+
+    </table>
+}
+
+<!-- Parse -->
+@if (selectedTab == 2)
+{
+    <h1>Parse Tree</h1>
+    <pre>@evaluation.Parse</pre>
+}
+
+<!-- Version Info -->
+@if (selectedTab == 3)
+{
+    <h1>Version Info</h1>
+    <table>
+
+        <tbody>
+
+            <tr>
+                <td>Buildtime</td>
+                <td>@buildTimeString</td>
+            </tr>
+
+            <tr>
+                <td>Power Fx</td>
+                <td><a href="https://github.com/microsoft/power-fx" target="_blank">@powerFxVersion</a></td>
+            </tr>
+
+        </tbody>
+
+    </table>
+}

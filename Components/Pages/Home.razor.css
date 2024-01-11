@@ -1,0 +1,24 @@
+﻿.tabButton {
+    border: 1px solid darkgray;
+    padding: 4px 20px;
+}
+
+.tabButtonSelected {
+    background-color: lightgray;
+}
+
+table {
+    border: 0;
+    width: 100%;
+}
+
+table th {
+    background-color: gray;
+    color: white;
+    text-align: center;
+}
+
+table td {
+    border: 1px solid gray;
+    text-align: center;
+}
